@@ -7,18 +7,40 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC0B4DA32A12286100B513FD /* AppDimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0B4DA22A12286100B513FD /* AppDimensions.swift */; };
+		FC0B4DA62A1229FC00B513FD /* Camera_Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0B4DA52A1229FC00B513FD /* Camera_Helper.swift */; };
+		FC0B4DAA2A123ECC00B513FD /* Ngon_Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0B4DA92A123ECC00B513FD /* Ngon_Generator.swift */; };
+		FC0B4DAD2A123FB700B513FD /* Building_Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0B4DAC2A123FB700B513FD /* Building_Section.swift */; };
+		FC0B4DAF2A12444400B513FD /* Buildling.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0B4DAE2A12444400B513FD /* Buildling.swift */; };
+		FC0B4DB22A12476000B513FD /* Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0B4DB12A12476000B513FD /* Enumerations.swift */; };
+		FC0B4DB42A124C8C00B513FD /* Building_Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0B4DB32A124C8C00B513FD /* Building_Collection.swift */; };
+		FC0B4DB62A1250A800B513FD /* Material_Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0B4DB52A1250A800B513FD /* Material_Generator.swift */; };
+		FC0B4DB82A1635CD00B513FD /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0B4DB72A1635CD00B513FD /* Protocols.swift */; };
+		FC0B4DBA2A1787AB00B513FD /* CentrePointFace_Ngon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC0B4DB92A1787AA00B513FD /* CentrePointFace_Ngon.swift */; };
 		FC2B69BD2A12156900C33B32 /* nGon_GeneratorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2B69BC2A12156900C33B32 /* nGon_GeneratorApp.swift */; };
 		FC2B69BF2A12156900C33B32 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2B69BE2A12156900C33B32 /* ContentView.swift */; };
 		FC2B69C12A12157200C33B32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC2B69C02A12157200C33B32 /* Assets.xcassets */; };
 		FC2B69C42A12157200C33B32 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC2B69C32A12157200C33B32 /* Preview Assets.xcassets */; };
+		FC2B69CC2A12166500C33B32 /* Main_3d_Scene_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2B69CB2A12166500C33B32 /* Main_3d_Scene_View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FC0B4DA22A12286100B513FD /* AppDimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDimensions.swift; sourceTree = "<group>"; };
+		FC0B4DA52A1229FC00B513FD /* Camera_Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera_Helper.swift; sourceTree = "<group>"; };
+		FC0B4DA92A123ECC00B513FD /* Ngon_Generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ngon_Generator.swift; sourceTree = "<group>"; };
+		FC0B4DAC2A123FB700B513FD /* Building_Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Building_Section.swift; sourceTree = "<group>"; };
+		FC0B4DAE2A12444400B513FD /* Buildling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buildling.swift; sourceTree = "<group>"; };
+		FC0B4DB12A12476000B513FD /* Enumerations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumerations.swift; sourceTree = "<group>"; };
+		FC0B4DB32A124C8C00B513FD /* Building_Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Building_Collection.swift; sourceTree = "<group>"; };
+		FC0B4DB52A1250A800B513FD /* Material_Generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Material_Generator.swift; sourceTree = "<group>"; };
+		FC0B4DB72A1635CD00B513FD /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		FC0B4DB92A1787AA00B513FD /* CentrePointFace_Ngon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentrePointFace_Ngon.swift; sourceTree = "<group>"; };
 		FC2B69B92A12156900C33B32 /* nGon_Generator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nGon_Generator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC2B69BC2A12156900C33B32 /* nGon_GeneratorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nGon_GeneratorApp.swift; sourceTree = "<group>"; };
 		FC2B69BE2A12156900C33B32 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FC2B69C02A12157200C33B32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC2B69C32A12157200C33B32 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FC2B69CB2A12166500C33B32 /* Main_3d_Scene_View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main_3d_Scene_View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +54,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FC0B4DA12A12284700B513FD /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				FC0B4DA22A12286100B513FD /* AppDimensions.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		FC0B4DA42A1229E600B513FD /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				FC0B4DA52A1229FC00B513FD /* Camera_Helper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		FC0B4DA82A123EB300B513FD /* Generators */ = {
+			isa = PBXGroup;
+			children = (
+				FC0B4DA92A123ECC00B513FD /* Ngon_Generator.swift */,
+				FC0B4DB52A1250A800B513FD /* Material_Generator.swift */,
+				FC0B4DB92A1787AA00B513FD /* CentrePointFace_Ngon.swift */,
+			);
+			path = Generators;
+			sourceTree = "<group>";
+		};
+		FC0B4DAB2A123F9E00B513FD /* Building_Collection */ = {
+			isa = PBXGroup;
+			children = (
+				FC0B4DAC2A123FB700B513FD /* Building_Section.swift */,
+				FC0B4DAE2A12444400B513FD /* Buildling.swift */,
+				FC0B4DB32A124C8C00B513FD /* Building_Collection.swift */,
+			);
+			path = Building_Collection;
+			sourceTree = "<group>";
+		};
+		FC0B4DB02A12474D00B513FD /* Enums_Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				FC0B4DB12A12476000B513FD /* Enumerations.swift */,
+				FC0B4DB72A1635CD00B513FD /* Protocols.swift */,
+			);
+			path = Enums_Protocols;
+			sourceTree = "<group>";
+		};
 		FC2B69B02A12156900C33B32 = {
 			isa = PBXGroup;
 			children = (
@@ -51,8 +118,14 @@
 		FC2B69BB2A12156900C33B32 /* nGon_Generator */ = {
 			isa = PBXGroup;
 			children = (
-				FC2B69BC2A12156900C33B32 /* nGon_GeneratorApp.swift */,
 				FC2B69BE2A12156900C33B32 /* ContentView.swift */,
+				FC0B4DB02A12474D00B513FD /* Enums_Protocols */,
+				FC0B4DAB2A123F9E00B513FD /* Building_Collection */,
+				FC0B4DA82A123EB300B513FD /* Generators */,
+				FC0B4DA42A1229E600B513FD /* Helpers */,
+				FC0B4DA12A12284700B513FD /* Core */,
+				FC2B69CA2A12163A00C33B32 /* UI */,
+				FC2B69BC2A12156900C33B32 /* nGon_GeneratorApp.swift */,
 				FC2B69C02A12157200C33B32 /* Assets.xcassets */,
 				FC2B69C22A12157200C33B32 /* Preview Content */,
 			);
@@ -65,6 +138,14 @@
 				FC2B69C32A12157200C33B32 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FC2B69CA2A12163A00C33B32 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				FC2B69CB2A12166500C33B32 /* Main_3d_Scene_View.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +218,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC0B4DA32A12286100B513FD /* AppDimensions.swift in Sources */,
+				FC0B4DA62A1229FC00B513FD /* Camera_Helper.swift in Sources */,
+				FC0B4DB22A12476000B513FD /* Enumerations.swift in Sources */,
+				FC0B4DB82A1635CD00B513FD /* Protocols.swift in Sources */,
+				FC2B69CC2A12166500C33B32 /* Main_3d_Scene_View.swift in Sources */,
 				FC2B69BF2A12156900C33B32 /* ContentView.swift in Sources */,
+				FC0B4DB42A124C8C00B513FD /* Building_Collection.swift in Sources */,
+				FC0B4DB62A1250A800B513FD /* Material_Generator.swift in Sources */,
+				FC0B4DAF2A12444400B513FD /* Buildling.swift in Sources */,
 				FC2B69BD2A12156900C33B32 /* nGon_GeneratorApp.swift in Sources */,
+				FC0B4DAD2A123FB700B513FD /* Building_Section.swift in Sources */,
+				FC0B4DBA2A1787AB00B513FD /* CentrePointFace_Ngon.swift in Sources */,
+				FC0B4DAA2A123ECC00B513FD /* Ngon_Generator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
