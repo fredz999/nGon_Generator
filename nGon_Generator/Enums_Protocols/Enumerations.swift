@@ -14,9 +14,9 @@ enum E_Building_Section_Type{
 }
 
 enum E_H_Vertex_Type {
-    case topFaceVertex
+    case topFaceCentreVertex
     case topFaceEdgeVertex
-    case bottomFaceVertex
+    case bottomFaceCentreVertex
     case bottomFaceEdgeVertex
 }
 

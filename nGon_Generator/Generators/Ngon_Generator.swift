@@ -17,8 +17,6 @@ class Ngon_Generator : P_Geometry_Gen, ObservableObject {
     var centrePointFace_Ngon : CentrePointFace_Ngon?
     
     func initalise_Geometry_From_Centrepoint_Ngon() -> SCNGeometry {
-//        let topVec = SCNVector3(x: 0, y: topPoint_Y, z: 0)
-//        let bottomVec = SCNVector3(x: 0, y: bottomPoint_Y, z: 0)
         var geom = SCNGeometry()
         let newCentrePointNGon = CentrePointFace_Ngon()
         centrePointFace_Ngon = newCentrePointNGon
@@ -42,8 +40,6 @@ class Ngon_Generator : P_Geometry_Gen, ObservableObject {
     }
 
 }
-
-
 
 class H_Vertex:Identifiable, Equatable, Hashable {
     var id = UUID()

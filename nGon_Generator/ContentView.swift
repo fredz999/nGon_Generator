@@ -10,8 +10,8 @@ import SwiftUI
 struct ContentView: View {
     let dimensions = AppDimensions.StaticAppDimensions
     var mainSceneStore = Main_3d_Scene_Store()
-    @State var rotationIndex : Int = 0
-    @State var currentSides : Int = 0
+//    @State var rotationIndex : Int = 0
+//    @State var currentSides : Int = 0
     var body: some View {
         return ZStack(alignment: .topLeading){
             Rectangle().foregroundColor(Color(red: 0.4, green: 0.4, blue: 0))
@@ -27,7 +27,7 @@ struct ContentView: View {
                             Text("r_bck").foregroundColor(.white)
                         }.onTapGesture {
                             if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection{
-                                lclBaseSection.rot_Forward_Backward(isNegative: false)
+                                lclBaseSection.roll_Forward_Backward(isNegative: false)
                             }
                         }
                         ZStack{
@@ -35,7 +35,7 @@ struct ContentView: View {
                             Text("r_fwd").foregroundColor(.white)
                         }.onTapGesture {
                             if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection{
-                                lclBaseSection.rot_Forward_Backward(isNegative: true)
+                                lclBaseSection.roll_Forward_Backward(isNegative: true)
                             }
                         }
                         
@@ -100,64 +100,96 @@ struct ContentView: View {
 
                     }
                     
-                    //if buildingStore.baseSection?.currentSides % 2 == 0{}
-//                    if let lclBase = mainSceneStore.building_Collection.building_Array[0].baseSection {
-//                        if let lclRoofNgonGenerator = mainSceneStore.building_Collection.building_Array[0].roof_NGon_Generator {
-//                            Slant_Buttons(buildingStore: mainSceneStore.building_Collection.building_Array[0], base_Section_Store: lclBase, roof_NGon_Generator: lclRoofNgonGenerator)
-//                        }
-//                    }
+
+                    if let lclBase = mainSceneStore.building_Collection.building_Array[0].baseSection {
+                        if let lclRoofNgonGenerator = mainSceneStore.building_Collection.building_Array[0].roof_NGon_Generator {
+                            if let centrFaceNgon = lclRoofNgonGenerator.centrePointFace_Ngon {
+                                Slant_Buttons_View(mainSceneStore: mainSceneStore
+                                , buildingStore: mainSceneStore.building_Collection.building_Array[0]
+                                , base_Section_Store: lclBase
+                                , roof_NGon_Generator: lclRoofNgonGenerator, centralNGon_Store: centrFaceNgon)
+                            }
+                        }
+                    }
+                    
+                    
                 }
             }
         }
     }
 }
 
-//struct Slant_Buttons : View {
-//    @ObservedObject var buildingStore : Building
-//    @ObservedObject var base_Section_Store : Building_Section
-//    @ObservedObject var roof_NGon_Generator : Ngon_Generator
-//    var body: some View {
-//        return HStack{
-////            if base_Section_Store.currentSides % 2 == 0{
-////                ZStack{
-////                    Rectangle().frame(width:90,height:30).foregroundColor(Color(red: 0.6, green: 0, blue: 0))
-////                    Text("2Up2Down").foregroundColor(.white)
-////                }.onTapGesture {
-////
-////                }
-////            }
-//            else if base_Section_Store.currentSides % 2 != 0{
-////                ZStack{
-////                    Rectangle().frame(width:90,height:30).foregroundColor(Color(red: 0.6, green: 0, blue: 0))
-////                    Text("pointUp").foregroundColor(.white)
-////                }.onTapGesture {
-////                    roof_NGon_Generator.roofSlantSetting = .roof_PointUp
-////                    //roof_NGon_Generator.gen_Geometry_From_Centrepoint_Ngon(sides: baseSec.currentSides, topPoint_Y: 0.5, bottomPoint_Y: -0.5, rotationIndex: baseSec.rotationIndex)
-////                }
-//                ZStack{
-//                    Rectangle().frame(width:90,height:30).foregroundColor(Color(red: 0.6, green: 0, blue: 0))
-//                    Text("pointDown").foregroundColor(.white)
-//                }.onTapGesture {
-//
-//                    //roof_NGon_Generator.roofSlantSetting = .roof_PointDown
-//                    if let lclCentrePointNgon = roof_NGon_Generator.centrePointFace_Ngon {
-//                        lclCentrePointNgon.roofSlantType = .roof_PointDown
-//                    }
-//                    base_Section_Store.updateGeometry()
-//                    //baseSec.inter
-//                }
-//            }
-////            ZStack{
-////                Rectangle().frame(width:90,height:30).foregroundColor(Color(red: 0.6, green: 0, blue: 0))
-////                Text("flat").foregroundColor(.white)
-////            }.onTapGesture {
-////                roof_NGon_Generator.roofSlantSetting = .roof_Flat
-////                //roof_NGon_Generator.gen_Geometry_From_Centrepoint_Ngon(sides: baseSec.currentSides, topPoint_Y: 0.5, bottomPoint_Y: -0.5, rotationIndex: baseSec.rotationIndex)
-////            }
-////
-////            Text(roof_NGon_Generator.roofSlantSetting.rawValue).foregroundColor(.white)
-//
-//
-//        }
-//    }
-//}
+struct Slant_Buttons_View : View {
+        var mainSceneStore : Main_3d_Scene_Store
+        @ObservedObject var buildingStore : Building
+        @ObservedObject var base_Section_Store : Building_Section
+        @ObservedObject var roof_NGon_Generator : Ngon_Generator
+        @ObservedObject var centralNGon_Store : CentrePointFace_Ngon
+    var body: some View {
+        HStack{
+            ZStack {
+                Rectangle().frame(width:90,height:30).foregroundColor(Color(red: 0, green: 0, blue: 0.6))
+                Text("gen_Slant").foregroundColor(.white)
+            }.onTapGesture {
+                if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
+                    if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
+                        lclCentrePointNgon.generate_Slant_Addition_Array()
+                    }
+                }
+            }
+            
+            ZStack {
+                Rectangle().frame(width:90,height:30).foregroundColor(Color(red: 0, green: 0, blue: 0.6))
+                Text("blank_Slant").foregroundColor(.white)
+            }.onTapGesture {
+                if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
+                    if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
+                        lclCentrePointNgon.blank_Slant_Addition_Array()
+                    }
+                }
+            }
+        }
+            
+        
+        HStack {
+            ZStack {
+                Rectangle().frame(width:90,height:30).foregroundColor(Color(red: 0, green: 0, blue: 0.6))
+                Text("frame =>").foregroundColor(.white)
+            }.onTapGesture {
+                if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
+                    if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
+                        if lclCentrePointNgon.slantAdditionArray.count > 0 {
+                            lclCentrePointNgon.frameShift(toRight: true)
+                        }
+                    }
+                }
+            }
+            
+            ZStack {
+                Rectangle().frame(width:90,height:30).foregroundColor(Color(red: 0, green: 0, blue: 0.6))
+                Text("<= frame").foregroundColor(.white)
+            }.onTapGesture {
+                if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
+                    if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
+                        if lclCentrePointNgon.slantAdditionArray.count > 0 {
+                            lclCentrePointNgon.frameShift(toRight: false)
+                        }
+                    }
+                }
+            }
+        }
+        //HStack {
+            ZStack {
+                Rectangle().frame(width:90,height:30).foregroundColor(Color(red: 0, green: 0, blue: 0.6))
+                Text("apply").foregroundColor(.white)
+            }.onTapGesture {
+                if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
+                    if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
+                        lclCentrePointNgon.reGenerateGeometry()
+                    }
+                    lclBaseSection.update_Geometry()
+                }
+            }
+
+    }
+}

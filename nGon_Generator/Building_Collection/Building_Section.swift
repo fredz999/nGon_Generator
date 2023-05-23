@@ -131,7 +131,7 @@ class Building_Section : ObservableObject,Identifiable, Equatable, Hashable {
         
     }
     
-    func rot_Forward_Backward(isNegative:Bool){
+    func roll_Forward_Backward(isNegative:Bool){
         if isNegative == true{externally_Visible_Node.eulerAngles.x -= 0.2}
         else if isNegative == false{externally_Visible_Node.eulerAngles.x += 0.2}
     }
