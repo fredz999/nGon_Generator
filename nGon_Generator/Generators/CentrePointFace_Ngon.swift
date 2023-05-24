@@ -13,8 +13,6 @@ import UIKit
 class CentrePointFace_Ngon : ObservableObject {
     
     var topFace_H_Vertices = [H_Vertex]()
-    //var topFaceEdge_H_Vertices = [H_Vertex]()
-    //var topFaceEdge_H_Vertices_Set = Set<H_Vertex>()
     var bottomFaceEdge_H_Vertices = [H_Vertex]()
     var topFaceIndices = [UInt16]()
     var wallIndices = [UInt16]()
@@ -27,8 +25,6 @@ class CentrePointFace_Ngon : ObservableObject {
     @Published var numSides : Int
     {
         didSet {
-//        generateTopFaceGeometry()
-//        generate_Slant_Addition_Array()
         reGenerateGeometry()
         }
     }
@@ -38,7 +34,6 @@ class CentrePointFace_Ngon : ObservableObject {
     @Published var roofSlantType : E_NGon_Slant_Type = .roof_Flat
     {
         didSet {
-        //if roofSlantType == .roof_Flat{slantAdditionArray.removeAll()}
         reGenerateGeometry()
         }
     }
@@ -49,7 +44,6 @@ class CentrePointFace_Ngon : ObservableObject {
     {
         didSet {
         reGenerateGeometry()
-        generate_Slant_Addition_Array()
         }
     }
     
@@ -87,7 +81,8 @@ class CentrePointFace_Ngon : ObservableObject {
         if topFace_H_Vertices.count > 0{ topFace_H_Vertices.removeAll() }
         let topFaceVertex = H_Vertex(vector3Param: topVector3, typeParam: .topFaceCentreVertex, placeInSpecifiedCollectionParam: 0)
         topFace_H_Vertices.append(topFaceVertex)
-        generate_Top_Face_Edge_Vertices(rotationIndex:rotationIndex)
+        generate_Top_Face_Edge_Vertices()
+        //(rotationIndex:rotationIndex)
     }
     
     func reGenerateGeometry(){
@@ -190,47 +185,65 @@ class CentrePointFace_Ngon : ObservableObject {
 
     }
     
-    
     var evenCosRation:Float = 1.0
     var evenSinRation:Float = 1.0
-    func generate_Top_Face_Edge_Vertices(rotationIndex:Int){
-        let standardSeperatingAngle : Float = 360/Float(numSides)
-        if numSides % 2 == 0 {
-            let halfStandard = standardSeperatingAngle/2
-            let totalSubtraction = (0-(90+halfStandard))+(standardSeperatingAngle*Float(rotationIndex))
-            let indexIdAddition = topFace_H_Vertices.count
-            for x in 0..<numSides{
-                let unadjustedAngleVal : Float = ((standardSeperatingAngle*Float(x))+totalSubtraction) * (Float.pi / 180)
-                let xVal = cos(unadjustedAngleVal)*evenCosRation
-                let zVal : Float = sin(unadjustedAngleVal)*evenSinRation
-                let vec3Top = SCNVector3(x: xVal, y: topFaceYfloat, z: zVal)
-                let hVecTop = H_Vertex(vector3Param: vec3Top, typeParam: .topFaceEdgeVertex, placeInSpecifiedCollectionParam: x+indexIdAddition)
-                topFace_H_Vertices.append(hVecTop)
-            }
+    var orientation : E_Section_Orientation = .south
+    
+    func flipOrientation(newOrientation:E_Section_Orientation){
+        if orientation != newOrientation{orientation = newOrientation}
+    }
+    
+    func genSubtraction() -> Float {
+        let standard_Angle : Float = 360/Float(numSides)
+        let rotationIndex_F = Float(rotationIndex)
+        
+        var retVal = (standard_Angle * rotationIndex_F) + (90)
+        if orientation == .north {
+        retVal = (standard_Angle * rotationIndex_F) + (270)
         }
-        else if numSides % 2 != 0 {
-            let halfStandard = standardSeperatingAngle/2
-            let totalSubtraction = (0-(90+halfStandard))+(standardSeperatingAngle*Float(rotationIndex))
-            let indexIdAddition = topFace_H_Vertices.count
-            for x in 0..<numSides{
-                let unadjustedAngleVal : Float = ((standardSeperatingAngle*Float(x))+totalSubtraction) * (Float.pi / 180)
-                let xVal = cos(unadjustedAngleVal)
-                let zVal : Float = sin(unadjustedAngleVal)
-                let vec3Top = SCNVector3(x: xVal, y: topFaceYfloat, z: zVal)
-                let hVecTop = H_Vertex(vector3Param: vec3Top, typeParam: .topFaceEdgeVertex, placeInSpecifiedCollectionParam: x+indexIdAddition)
-                topFace_H_Vertices.append(hVecTop)
-            }
+        
+        return retVal
+    }
+
+    func generate_Top_Face_Edge_Vertices(){
+    let standardSeperatingAngle : Float = 360/Float(numSides)
+    if numSides % 2 == 0 {
+        let halfStandard = standardSeperatingAngle/2
+        let totalSubtraction = genSubtraction()
+        let indexIdAddition = topFace_H_Vertices.count
+        for x in 0..<numSides{
+            let unadjustedAngleVal : Float = ((standardSeperatingAngle*Float(x))+totalSubtraction) * (Float.pi / 180)
+            let xVal = cos(unadjustedAngleVal)*evenCosRation
+            let zVal : Float = sin(unadjustedAngleVal)*evenSinRation
+            let vec3Top = SCNVector3(x: xVal, y: topFaceYfloat, z: zVal)
+            let hVecTop = H_Vertex(vector3Param: vec3Top, typeParam: .topFaceEdgeVertex, placeInSpecifiedCollectionParam: x+indexIdAddition)
+            topFace_H_Vertices.append(hVecTop)
         }
     }
+    else if numSides % 2 != 0 {
+        let totalSubtraction = genSubtraction()
+        let indexIdAddition = topFace_H_Vertices.count
+        for x in 0..<numSides{
+            let unadjustedAngleVal : Float = ((standardSeperatingAngle*Float(x))+totalSubtraction) * (Float.pi / 180)
+            let xVal = cos(unadjustedAngleVal)
+            let zVal : Float = sin(unadjustedAngleVal)
+            let vec3Top = SCNVector3(x: xVal, y: topFaceYfloat, z: zVal)
+            let hVecTop = H_Vertex(vector3Param: vec3Top, typeParam: .topFaceEdgeVertex, placeInSpecifiedCollectionParam: x+indexIdAddition)
+            topFace_H_Vertices.append(hVecTop)
+        }
+    }
+}
     
     func generateBottomFaceVertices(rotationIndex:Int){
         let standardSeperatingAngle : Float = 360/Float(numSides)
         let indexIdAddition = topFace_H_Vertices.count
         if numSides % 2 == 0 {
             let halfStandard = standardSeperatingAngle/2
-            let totalSubtraction = (0-(90+halfStandard))+(standardSeperatingAngle*Float(rotationIndex))
+            let totalSubtraction = genSubtraction()
+            //(0-(90+halfStandard))+(standardSeperatingAngle*Float(rotationIndex))
             for x in 0..<numSides {
                 let unadjustedAngleVal : Float = ((standardSeperatingAngle*Float(x))+totalSubtraction) * (Float.pi / 180)
+                //let unadjustedAngleVal : Float = ((standardSeperatingAngle*Float(x))+halfStandard) * (Float.pi / 180)
                 let xVal = cos(unadjustedAngleVal)
                 let zVal : Float = sin(unadjustedAngleVal)
                 let vec3Top = SCNVector3(x: xVal, y: bottomFaceYfloat, z: zVal)
@@ -239,10 +252,13 @@ class CentrePointFace_Ngon : ObservableObject {
             }
         }
         else if numSides % 2 != 0 {
-            let halfStandard = standardSeperatingAngle/2
-            let totalSubtraction = (0-(90+halfStandard))+(standardSeperatingAngle*Float(rotationIndex))
+            //let halfStandard = standardSeperatingAngle/2
+            let totalSubtraction = genSubtraction()
+            //(0-(90+halfStandard))+(standardSeperatingAngle*Float(rotationIndex))
+            //let totalSubtraction = Float(90)+(halfStandard*Float(rotationIndex))
             let indexIdAddition = topFace_H_Vertices.count
             for x in 0..<numSides {
+                //let unadjustedAngleVal : Float = ((standardSeperatingAngle*Float(x))+totalSubtraction) * (Float.pi / 180)
                 let unadjustedAngleVal : Float = ((standardSeperatingAngle*Float(x))+totalSubtraction) * (Float.pi / 180)
                 let xVal = cos(unadjustedAngleVal)
                 let zVal : Float = sin(unadjustedAngleVal)

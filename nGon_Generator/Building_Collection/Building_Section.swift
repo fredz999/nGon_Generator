@@ -76,13 +76,12 @@ class Building_Section : ObservableObject,Identifiable, Equatable, Hashable {
     
     var markerArray = [SCNNode]()
     
-
-    
     func initalise_Geometry(){
         internally_Held_Material = materialGenerator.generateMaterial()
         internally_Held_Geometry = geometryGenerator.initalise_Geometry_From_Centrepoint_Ngon()
         internally_Held_Geometry.materials = [internally_Held_Material]
         externally_Visible_Node.geometry = internally_Held_Geometry
+        externally_Visible_Node.eulerAngles.x += 1
         rePlaceMarkess()
     }
     

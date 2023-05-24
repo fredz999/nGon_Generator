@@ -24,7 +24,7 @@ class AppDimensions {
     let defaultBaseInitial_Max_Floors : Int = 10
     let defaultBaseInitial_Start_Floors : Int = 5
     
-    let initialSectionSides = 4
+    let initialSectionSides = 5
     
     func returnInitialSectionVals(designation:E_Building_Section_Type)->Initial_Section_Info{
         //default to base
