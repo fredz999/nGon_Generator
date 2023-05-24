@@ -23,6 +23,7 @@
 		FC2B69C42A12157200C33B32 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC2B69C32A12157200C33B32 /* Preview Assets.xcassets */; };
 		FC2B69CC2A12166500C33B32 /* Main_3d_Scene_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2B69CB2A12166500C33B32 /* Main_3d_Scene_View.swift */; };
 		FCAF5D692A1D00E7007E8190 /* Slant_Buttons_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAF5D682A1D00E7007E8190 /* Slant_Buttons_View.swift */; };
+		FCAF5D6B2A1E1F66007E8190 /* Orientation_Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCAF5D6A2A1E1F65007E8190 /* Orientation_Buttons.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		FC2B69C32A12157200C33B32 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FC2B69CB2A12166500C33B32 /* Main_3d_Scene_View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main_3d_Scene_View.swift; sourceTree = "<group>"; };
 		FCAF5D682A1D00E7007E8190 /* Slant_Buttons_View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slant_Buttons_View.swift; sourceTree = "<group>"; };
+		FCAF5D6A2A1E1F65007E8190 /* Orientation_Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation_Buttons.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 			children = (
 				FC2B69CB2A12166500C33B32 /* Main_3d_Scene_View.swift */,
 				FCAF5D682A1D00E7007E8190 /* Slant_Buttons_View.swift */,
+				FCAF5D6A2A1E1F65007E8190 /* Orientation_Buttons.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCAF5D6B2A1E1F66007E8190 /* Orientation_Buttons.swift in Sources */,
 				FC0B4DA32A12286100B513FD /* AppDimensions.swift in Sources */,
 				FC0B4DA62A1229FC00B513FD /* Camera_Helper.swift in Sources */,
 				FC0B4DB22A12476000B513FD /* Enumerations.swift in Sources */,

@@ -38,7 +38,7 @@ class CentrePointFace_Ngon : ObservableObject {
         }
     }
     
-    var slantModificationArray : [Float] = []
+    
     
     @Published var rotationIndex:Int = 0
     {
@@ -61,10 +61,19 @@ class CentrePointFace_Ngon : ObservableObject {
         }
     }
     
+    //================== SLOPE ======================================
+    var slantModificationArray : [Float] = []
+    var sortedZFloats = [Float](){
+        didSet {
+            print("sortedZFloats count: ",sortedZFloats.count)
+        }
+    }
+    var evenCosRation:Float = 1.0
+    var evenSinRation:Float = 1.0
+    @Published var orientation : E_Section_Orientation = .south
     //===================/ALTERATION SECTION=========================
     
     var normals = [SCNVector3]()
-    
     var radius : Float = 1.0
     var widthScale : Float = 1
     var lengthScale : Float = 1
@@ -82,7 +91,6 @@ class CentrePointFace_Ngon : ObservableObject {
         let topFaceVertex = H_Vertex(vector3Param: topVector3, typeParam: .topFaceCentreVertex, placeInSpecifiedCollectionParam: 0)
         topFace_H_Vertices.append(topFaceVertex)
         generate_Top_Face_Edge_Vertices()
-        //(rotationIndex:rotationIndex)
     }
     
     func reGenerateGeometry(){
@@ -157,12 +165,6 @@ class CentrePointFace_Ngon : ObservableObject {
         
     }
     
-    var sortedZFloats = [Float](){
-        didSet {
-            print("sortedZFloats count: ",sortedZFloats.count)
-        }
-    }
-    
     var currFrameShiftAMount:Int = 0
     
     func frameShift(toRight:Bool){
@@ -185,10 +187,6 @@ class CentrePointFace_Ngon : ObservableObject {
 
     }
     
-    var evenCosRation:Float = 1.0
-    var evenSinRation:Float = 1.0
-    var orientation : E_Section_Orientation = .south
-    
     func flipOrientation(newOrientation:E_Section_Orientation){
         if orientation != newOrientation{orientation = newOrientation}
     }
@@ -199,9 +197,11 @@ class CentrePointFace_Ngon : ObservableObject {
         let rotationIndex_F = Float(rotationIndex)
         
         var retVal = (standard_Angle * rotationIndex_F) + (90)
+        
         if orientation == .north {
         retVal = (standard_Angle * rotationIndex_F) + (270)
         }
+        
         else if orientation == .east {
             retVal = (0-(90+halfStandard))+(standard_Angle*Float(rotationIndex))
         }
@@ -244,10 +244,8 @@ class CentrePointFace_Ngon : ObservableObject {
         if numSides % 2 == 0 {
             let halfStandard = standardSeperatingAngle/2
             let totalSubtraction = genSubtraction()
-            //(0-(90+halfStandard))+(standardSeperatingAngle*Float(rotationIndex))
             for x in 0..<numSides {
                 let unadjustedAngleVal : Float = ((standardSeperatingAngle*Float(x))+totalSubtraction) * (Float.pi / 180)
-                //let unadjustedAngleVal : Float = ((standardSeperatingAngle*Float(x))+halfStandard) * (Float.pi / 180)
                 let xVal = cos(unadjustedAngleVal)
                 let zVal : Float = sin(unadjustedAngleVal)
                 let vec3Top = SCNVector3(x: xVal, y: bottomFaceYfloat, z: zVal)
@@ -256,13 +254,9 @@ class CentrePointFace_Ngon : ObservableObject {
             }
         }
         else if numSides % 2 != 0 {
-            //let halfStandard = standardSeperatingAngle/2
             let totalSubtraction = genSubtraction()
-            //(0-(90+halfStandard))+(standardSeperatingAngle*Float(rotationIndex))
-            //let totalSubtraction = Float(90)+(halfStandard*Float(rotationIndex))
             let indexIdAddition = topFace_H_Vertices.count
             for x in 0..<numSides {
-                //let unadjustedAngleVal : Float = ((standardSeperatingAngle*Float(x))+totalSubtraction) * (Float.pi / 180)
                 let unadjustedAngleVal : Float = ((standardSeperatingAngle*Float(x))+totalSubtraction) * (Float.pi / 180)
                 let xVal = cos(unadjustedAngleVal)
                 let zVal : Float = sin(unadjustedAngleVal)
