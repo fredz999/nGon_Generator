@@ -195,11 +195,15 @@ class CentrePointFace_Ngon : ObservableObject {
     
     func genSubtraction() -> Float {
         let standard_Angle : Float = 360/Float(numSides)
+        let halfStandard = standard_Angle/2
         let rotationIndex_F = Float(rotationIndex)
         
         var retVal = (standard_Angle * rotationIndex_F) + (90)
         if orientation == .north {
         retVal = (standard_Angle * rotationIndex_F) + (270)
+        }
+        else if orientation == .east {
+            retVal = (0-(90+halfStandard))+(standard_Angle*Float(rotationIndex))
         }
         
         return retVal

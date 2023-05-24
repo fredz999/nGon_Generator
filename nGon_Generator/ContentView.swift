@@ -30,6 +30,7 @@ struct ContentView: View {
                                 lclBaseSection.roll_Forward_Backward(isNegative: false)
                             }
                         }
+                        
                         ZStack{
                             Rectangle().frame(width:50,height:30).foregroundColor(Color(red: 0, green: 0.6, blue: 0))
                             Text("r_fwd").foregroundColor(.white)
@@ -68,7 +69,6 @@ struct ContentView: View {
                         }
                     }
                     
-
                     if let lclBase = mainSceneStore.building_Collection.building_Array[0].baseSection {
                         if let lclRoofNgonGenerator = mainSceneStore.building_Collection.building_Array[0].roof_NGon_Generator {
                             if let centrFaceNgon = lclRoofNgonGenerator.centrePointFace_Ngon {
@@ -80,33 +80,7 @@ struct ContentView: View {
                         }
                     }
                     
-                    HStack{
-                        ZStack{
-                            Rectangle().frame(width:50,height:30).foregroundColor(.pink)
-                            Text("P_North").foregroundColor(.white)
-                        }.onTapGesture {
-                            if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
-                                if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
-                                    lclCentrePointNgon.flipOrientation(newOrientation: .north)
-                                    lclCentrePointNgon.reGenerateGeometry()
-                                }
-                                lclBaseSection.update_Geometry()
-                            }
-                        }
-
-                        ZStack{
-                            Rectangle().frame(width:50,height:30).foregroundColor(.pink)
-                            Text("P_South").foregroundColor(.white)
-                        }.onTapGesture {
-                            if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
-                                if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
-                                    lclCentrePointNgon.flipOrientation(newOrientation: .south)
-                                    lclCentrePointNgon.reGenerateGeometry()
-                                }
-                                lclBaseSection.update_Geometry()
-                            }
-                        }
-                    }
+                    Orientation_Buttons(mainSceneStore: mainSceneStore)
                     
                     
                     
@@ -117,7 +91,57 @@ struct ContentView: View {
     }
 }
 
+struct Orientation_Buttons : View {
+    var mainSceneStore : Main_3d_Scene_Store
+//    @ObservedObject var buildingStore : Building
+//    @ObservedObject var base_Section_Store : Building_Section
+//    @ObservedObject var roof_NGon_Generator : Ngon_Generator
+//    @ObservedObject var centralNGon_Store : CentrePointFace_Ngon
+    
+    var body: some View{
+        return HStack{
+            ZStack{
+                Rectangle().frame(width:50,height:30).foregroundColor(.pink)
+                Text("P_North").foregroundColor(.white)
+            }.onTapGesture {
+                if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
+                    if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
+                        lclCentrePointNgon.flipOrientation(newOrientation: .north)
+                        lclCentrePointNgon.reGenerateGeometry()
+                    }
+                    lclBaseSection.update_Geometry()
+                }
+            }
 
+            ZStack{
+                Rectangle().frame(width:50,height:30).foregroundColor(.pink)
+                Text("P_South").foregroundColor(.white)
+            }.onTapGesture {
+                if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
+                    if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
+                        lclCentrePointNgon.flipOrientation(newOrientation: .south)
+                        lclCentrePointNgon.reGenerateGeometry()
+                    }
+                    lclBaseSection.update_Geometry()
+                }
+            }
+            
+            ZStack{
+                Rectangle().frame(width:50,height:30).foregroundColor(.pink)
+                Text("P_East").foregroundColor(.white)
+            }.onTapGesture {
+                if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
+                    if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
+                        lclCentrePointNgon.flipOrientation(newOrientation: .east)
+                        lclCentrePointNgon.reGenerateGeometry()
+                    }
+                    lclBaseSection.update_Geometry()
+                }
+            }
+            
+        }
+    }
+}
 
 
 

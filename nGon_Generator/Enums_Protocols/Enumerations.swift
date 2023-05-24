@@ -36,4 +36,5 @@ enum E_Section_Type {
 enum E_Section_Orientation {
     case north
     case south
+    case east
 }
