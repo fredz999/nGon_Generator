@@ -126,9 +126,9 @@ class CentrePointFace_Ngon : ObservableObject {
     func apply_Top_Face_Modifiers(){
 
         let applicationZone = topFace_H_Vertices.filter{$0.type == .topFaceEdgeVertex}
-        if slantAdditionArray.count >= applicationZone.count &&  slantAdditionArray.count > 0{
+        if slope_Generator.slantAdditionArray.count >= applicationZone.count &&  slope_Generator.slantAdditionArray.count > 0{
             for i in 0..<applicationZone.count {
-                applicationZone[i].vector3.y += slantAdditionArray[i]
+                applicationZone[i].vector3.y += slope_Generator.slantAdditionArray[i]
             }
         }
         for v in topFace_H_Vertices {
@@ -136,56 +136,10 @@ class CentrePointFace_Ngon : ObservableObject {
         }
     }
 
-    var slantAdditionArray = [Float]()
-
-    func blank_Slant_Addition_Array(){
-        slantAdditionArray.removeAll()
-        print("slantAdditionArray count: ",slantAdditionArray.count.description)
-    }
+    //=============================================
+    var slope_Generator = Slope_Generator()
     
-    func generate_Slant_Addition_Array(){
-        if slantAdditionArray.count > 0{slantAdditionArray.removeAll()}
-        let edgeSection = topFace_H_Vertices.filter{$0.type != .topFaceCentreVertex}
-
-        for i in 0..<edgeSection.count {
-            let zVal : Float = edgeSection[i].vector3.z
-            let multipliedZ = zVal*100
-            let intMultiplied = Int(multipliedZ)
-
-            let z_Multiplier = Float(intMultiplied)/100
-            let slantAddition = 0.25*(z_Multiplier)
-            slantAdditionArray.append(slantAddition)
-        }
-        
-        var trackString = ""
-        for v in slantAdditionArray{
-            trackString.append(v.description+", ")
-        }
-        print("slantAdditionArray: ",trackString)
-        
-    }
-    
-    var currFrameShiftAMount:Int = 0
-    
-    func frameShift(toRight:Bool){
-        
-        if slantAdditionArray.count > 0 {
-            let shifter = FrameShifter()
-            if toRight == true {
-                shifter.shiftArrayFrame(frameShift: 1, floatArray: &slantAdditionArray)
-            }
-            else if toRight == false {
-                shifter.shiftArrayFrame(frameShift: -1, floatArray: &slantAdditionArray)
-            }
-            var trackString = ""
-            for v in slantAdditionArray{trackString.append(v.description+", ")
-            }
-        }
-        else if slantAdditionArray.count == 0 {
-            print("slantAdditionArray was nil: ")
-        }
-
-    }
+    //=============================================
     
     func flipOrientation(newOrientation:E_Section_Orientation){
         if orientation != newOrientation{orientation = newOrientation}
@@ -329,57 +283,127 @@ class CentrePointFace_Ngon : ObservableObject {
     
 }
 
+class Slope_Generator {
+    
+    var slantAdditionArray = [Float]()
 
-class Modifier{
+    func blank_Slant_Addition_Array(){
+        slantAdditionArray.removeAll()
+        print("slantAdditionArray count: ",slantAdditionArray.count.description)
+    }
     
-    var modificationFloats = [Float]()
-    
-    func generateModificationArray(basePositionsArray:[H_Vertex]){
+    func generate_Slant_Addition_Array(topFace_H_Vertices:[H_Vertex]){
+        
+        if slantAdditionArray.count > 0{slantAdditionArray.removeAll()}
+        
+        let edgeSection = topFace_H_Vertices.filter{$0.type != .topFaceCentreVertex}
+
+        for i in 0..<edgeSection.count {
+            let zVal : Float = edgeSection[i].vector3.z
+            let multipliedZ = zVal*100
+            let intMultiplied = Int(multipliedZ)
+
+            let z_Multiplier = Float(intMultiplied)/100
+            let slantAddition = 0.25*(z_Multiplier)
+            slantAdditionArray.append(slantAddition)
+        }
+        
+        var trackString = ""
+        for v in slantAdditionArray{
+            trackString.append(v.description+", ")
+        }
+        print("slantAdditionArray: ",trackString)
         
     }
     
-    func applyModification(basePositionsArray:inout [H_Vertex],resultingVectorArray : inout [SCNVector3]){
+    func generate_Slant_Addition_Array_2(topFace_H_Vertices:[H_Vertex]){
         
+        if slantAdditionArray.count > 0{slantAdditionArray.removeAll()}
+        
+        let edgeSection = topFace_H_Vertices.filter{$0.type != .topFaceCentreVertex}
+        
+        var zMultArray = [Float]()
+
+        for v in edgeSection {
+        let zVal : Float = v.vector3.z
+        let multipliedZ = zVal*100
+        let intMultiplied = Int(multipliedZ)
+        let z_Multiplier = Float(intMultiplied)/100
+        zMultArray.append(z_Multiplier)
+        }
+        
+        let ordered_Z_Mults = zMultArray.sorted(by: {$0 < $1})
+        var trackString = ""
+        for ov in ordered_Z_Mults {
+            trackString.append(ov.description+", ")
+        }
+        
+        var unsignedFirst = (ordered_Z_Mults[0])
+        if unsignedFirst < 0 {
+        let tempFloat = 0-unsignedFirst
+        unsignedFirst = tempFloat
+        }
+        
+        var unsignedLast = 0-(ordered_Z_Mults[ordered_Z_Mults.count-1])
+        if unsignedLast < 0 {
+        let tempFloat = 0 - unsignedLast
+        unsignedLast = tempFloat
+        }
+        
+        let z_Spread = unsignedLast + unsignedFirst
+        let y_Spread = highYAddition - lowYAddition
+        var yVals = [Float]()
+        
+        for i in 0..<ordered_Z_Mults.count{
+            let delta = ordered_Z_Mults[i]-ordered_Z_Mults[0]
+            let deltaFraction = delta/z_Spread
+            let y_Fraction = deltaFraction * y_Spread
+            let finalRes = y_Fraction + lowYAddition
+            let finalResTwoPlaces = twoPlaces(inVal: finalRes)
+            yVals.append(finalResTwoPlaces)
+        }
+        
+        var resultsString = ""
+        for res in yVals {
+            resultsString.append(res.description+", ")
+        }
+        print("resultsString: ",resultsString)
     }
     
-    func generate_Slant_Addition_Array_2(){
+    func twoPlaces(inVal:Float)->Float{
+        let timesHundred = inVal*100
+        let intHundred = Int(timesHundred)
+        let floatHundred = Float(intHundred)
+        let result = floatHundred/100
+        return result
+    }
+    
+    //var zRatio : Float = 0.0
+    var highYAddition : Float = 0.25
+    var lowYAddition : Float = -0.25
+    
+    var currFrameShiftAMount:Int = 0
+    
+    func frameShift(toRight:Bool){
         
-//        if modificationFloats.count > 0{modificationFloats.removeAll()}
-//
-//        let edgeSection = topFace_H_Vertices.filter{$0.type == .topFaceEdgeVertex}
-//
-//        var individual_Z_Floats = Set<Float>()
-        
-//        for i in 0..<edgeSection.count {
-//            let zVal : Float = edgeSection[i].vector3.z
-//            let multipliedZ = zVal*100
-//            let intMultiplied = Int(multipliedZ)
-//            let z_Centrigrade_Band = Float(intMultiplied)/100
-//            individual_Z_Floats.insert(z_Centrigrade_Band)
-//        }
-        
-        //sortedZFloats = individual_Z_Floats.sorted(by:{ $0 < $1 })
-        
-        
-//        for edgeVertex in topFace_H_Vertices{
-//            if edgeVertex.type == .topFaceEdgeVertex{
-//                let zVal : Float = edgeVertex.vector3.z
-//                let multipliedZ = zVal*100
-//                let intMultiplied = Int(multipliedZ)
-//                let z_Centi = Float(intMultiplied)/100
-//                for j in 0..<sortedZFloats.count {
-//                    if z_Centi == sortedZFloats[j] {
-//                        edgeVertex.zCentigradeBand = j
-//                        print("whhhhaaaaat.............")
-//                    }
-//                }
-//            }
-//        }
-        
-        
+        if slantAdditionArray.count > 0 {
+            let shifter = FrameShifter()
+            if toRight == true {
+                shifter.shiftArrayFrame(frameShift: 1, floatArray: &slantAdditionArray)
+            }
+            else if toRight == false {
+                shifter.shiftArrayFrame(frameShift: -1, floatArray: &slantAdditionArray)
+            }
+            var trackString = ""
+            for v in slantAdditionArray{trackString.append(v.description+", ")
+            }
+        }
+        else if slantAdditionArray.count == 0 {
+            print("slantAdditionArray was nil: ")
+        }
+
     }
 }
-
 
 class FrameShifter{
     func shiftArrayFrame(frameShift:Int,floatArray: inout [Float]){
@@ -407,90 +431,3 @@ class FrameShifter{
         floatArray = returnArray
     }
 }
-
-//class ZBand:Identifiable,Hashable,Equatable {
-//
-//    var id = UUID()
-//    var centigrade_Z_Index : Float
-//
-//    public static func == (lhs: ZBand, rhs: ZBand) -> Bool {
-//        lhs.id == rhs.id
-//    }
-//
-//    public func hash(into hasher: inout Hasher) {
-//        hasher.combine(id)
-//    }
-//
-//    init(centigradeParam:Float){
-//        centigrade_Z_Index = centigradeParam
-//    }
-//
-//}
-
-
-
-
-
-
-//class FrameShiftArrayHolder {
-//
-//    var originalArray = [Float]()
-//    var shiftedArray = [Float]()
-//    var frameShift : Int = 0 {
-//        didSet {
-//            shiftArrayFrame()
-//        }
-//    }
-//
-//    func injectNewArray(originalArrayParam:[Float]){
-//        if originalArray.count != 0{originalArray.removeAll()}
-//        if shiftedArray.count != 0{shiftedArray.removeAll()}
-//        originalArray = originalArrayParam
-//        for i in 0..<originalArray.count{
-//            shiftedArray.append(originalArray[i])
-//        }
-//    }
-//
-//    func shiftArrayFrame(){
-//        if shiftedArray.count > 0{shiftedArray.removeAll()}
-//        if frameShift > 0 {
-//
-//            //1: last one goes to the start
-//            for i in originalArray.count-frameShift...originalArray.count-1{
-//                shiftedArray.append(originalArray[i])
-//            }
-//            for i in 0..<originalArray.count-frameShift{
-//                shiftedArray.append(originalArray[i])
-//            }
-//            //shiftedArray.append(originalArray[  originalArray.count-1])
-//            //2: from 0 to last-1 gets tagged on after the new 0
-////            for i in 0..<originalArray.count-1{
-////                shiftedArray.append(originalArray[i])
-////            }
-//        }
-//        else if frameShift < 0 {
-//            print("less than hit")
-////            for i in 0..<frameShift {
-////                shiftedArray.append(originalArray[i])
-////            }
-////            for i in frameShift..<originalArray.count {
-////                shiftedArray.append(originalArray[i])
-////            }
-//        }
-////        else if frameShift == 0{
-////            print("equal to hit")
-////            for i in 0..<originalArray.count{
-////                shiftedArray.append(originalArray[i])
-////            }
-////        }
-//
-//    }
-//}
-
-
-//for i in frameShift..<originalArray.count {
-//shiftedArray.append(originalArray[i])
-//}
-//for i in 0..<frameShift {
-//shiftedArray.append(originalArray[i])
-//}

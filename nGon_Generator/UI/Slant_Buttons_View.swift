@@ -22,7 +22,8 @@ struct Slant_Buttons_View : View {
             }.onTapGesture {
                 if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
                     if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
-                        lclCentrePointNgon.generate_Slant_Addition_Array()
+                        lclCentrePointNgon.slope_Generator.generate_Slant_Addition_Array(topFace_H_Vertices: lclCentrePointNgon.topFace_H_Vertices)
+                        lclCentrePointNgon.slope_Generator.generate_Slant_Addition_Array_2(topFace_H_Vertices: lclCentrePointNgon.topFace_H_Vertices)
                     }
                 }
             }
@@ -33,7 +34,7 @@ struct Slant_Buttons_View : View {
             }.onTapGesture {
                 if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
                     if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
-                        lclCentrePointNgon.blank_Slant_Addition_Array()
+                        lclCentrePointNgon.slope_Generator.blank_Slant_Addition_Array()
                     }
                 }
             }
@@ -46,8 +47,8 @@ struct Slant_Buttons_View : View {
             }.onTapGesture {
                 if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
                     if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
-                        if lclCentrePointNgon.slantAdditionArray.count > 0 {
-                            lclCentrePointNgon.frameShift(toRight: true)
+                        if lclCentrePointNgon.slope_Generator.slantAdditionArray.count > 0 {
+                            lclCentrePointNgon.slope_Generator.frameShift(toRight: true)
                         }
                     }
                 }
@@ -59,25 +60,25 @@ struct Slant_Buttons_View : View {
             }.onTapGesture {
                 if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
                     if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
-                        if lclCentrePointNgon.slantAdditionArray.count > 0 {
-                            lclCentrePointNgon.frameShift(toRight: false)
+                        if lclCentrePointNgon.slope_Generator.slantAdditionArray.count > 0 {
+                            lclCentrePointNgon.slope_Generator.frameShift(toRight: false)
                         }
                     }
                 }
             }
         }
-        //HStack {
-            ZStack {
-                Rectangle().frame(width:90,height:30).foregroundColor(Color(red: 0, green: 0, blue: 0.6))
-                Text("apply").foregroundColor(.white)
-            }.onTapGesture {
-                if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
-                    if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
-                        lclCentrePointNgon.reGenerateGeometry()
-                    }
-                    lclBaseSection.update_Geometry()
+
+        ZStack {
+            Rectangle().frame(width:90,height:30).foregroundColor(Color(red: 0, green: 0, blue: 0.6))
+            Text("apply").foregroundColor(.white)
+        }.onTapGesture {
+            if let lclBaseSection = mainSceneStore.building_Collection.building_Array[0].baseSection {
+                if let lclCentrePointNgon = lclBaseSection.geometryGenerator.centrePointFace_Ngon {
+                    lclCentrePointNgon.reGenerateGeometry()
                 }
+                lclBaseSection.update_Geometry()
             }
+        }
 
     }
 }
